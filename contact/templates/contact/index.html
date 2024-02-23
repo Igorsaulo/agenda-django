@@ -1,0 +1,77 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+{% if contacts %}
+<div class="responsive-table">
+    <table class="contacts-table">
+        <caption class="table-caption">
+            Contatos
+        </caption>
+        <thead>
+            <tr class="table-row table-row-header">
+                <th class="table-header">ID</th>
+                <th class="table-header">Nome</th>
+                <th class="table-header">Sobrenome</th>
+                <th class="table-header">Email</th>
+                <th class="table-header">Telefone</th>
+        </thead>
+        <tbody>
+            {% for contact in contacts %}
+            <tr class="table-row">
+                <td class="table-cel">
+                    <a class="table-link" href="{% url 'contact:contact' contact.id %}">
+                        {{ contact.id }}
+                    </a>
+                </td>
+                <td class="table-cel">
+                    <a class="table-link" href="{% url 'contact:contact' contact.id %}">
+                        {{ contact.first_name }}
+                    </a>
+                </td>
+                <td class="table-cel">
+                    <a class="table-link" href="{% url 'contact:contact' contact.id %}">
+                        {{ contact.last_name }}
+                    </a>
+                </td>
+                <td class="table-cel">
+                    <a class="table-link" href="{% url 'contact:contact' contact.id %}">
+                        {{ contact.email }}
+                    </a>
+                </td>
+                <td class="table-cel">
+                    <a class="table-link" href="{% url 'contact:contact' contact.id %}">
+                        {{ contact.phone }}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if contacts.has_previous %}
+                <a href="?page=1">&laquo; Primeira</a>
+                <a href="?page={{ contacts.previous_page_number }}">Anterior</a>
+            {% endif %}
+    
+            <span class="current">
+                Página {{ contacts.number }} de {{ contacts.paginator.num_pages }}.
+            </span>
+    
+            {% if contacts.has_next %}
+                <a href="?page={{ contacts.next_page_number }}">Próxima</a>
+                <a href="?page={{ contacts.paginator.num_pages }}">Última &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+</div>
+
+{% else %}
+<div class="single-contact">
+    <h1 class="single-contact-name">
+        Nenhum contato encontrado
+    </h1>
+</div>
+{% endif %}
+{% endblock %}
