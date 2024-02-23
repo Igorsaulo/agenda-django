@@ -46,10 +46,9 @@ def search(request):
         | Q(last_name__icontains=query)
         | Q(email__icontains=query)
         | Q(phone__icontains=query)
-        | (Q(first_name__icontains=query.split(' ')[0]) & Q(last_name__icontains=query.split(' ')[1])) if textDivisible(query) else Q()
-            
-        
+        | (Q(first_name__icontains=query.split(' ')[0]) & Q(last_name__icontains=query.split(' ')[1]) if textDivisible(query) else Q())
     ).order_by('-id')
+    
     context = {
         'contacts': contacts,
         'site_title': f'Resultados para {query} -'
