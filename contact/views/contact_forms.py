@@ -46,7 +46,6 @@ def update(request, contact_id):
 def delete(request, contact_id):
     contact = get_object_or_404(Contact, id=contact_id, show=True)
     confirmation = request.POST.get('confirmation', 'no')
-    print(confirmation)
     if confirmation == 'yes':
         if contact.picture:
             contact.picture.delete()

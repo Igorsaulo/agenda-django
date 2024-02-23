@@ -44,7 +44,7 @@ def search(request):
         | Q(email__icontains=query)
         | Q(phone__icontains=query)
         | Q(first_name__icontains=query.split(' ')[0] , last_name__icontains=query.split(' ')[1])
-    ).order_by('-id')[:10]
+    ).order_by('-id')
     context = {
         'contacts': contacts,
         'site_title': f'Resultados para {query} -'
