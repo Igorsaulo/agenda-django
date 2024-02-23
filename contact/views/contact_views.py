@@ -33,6 +33,9 @@ def contact(request, contact_id):
         context
         )
     
+def textDivisible(text : str) -> bool:
+    return len(text.split(' ')) == 2
+
 def search(request):
     query = request.GET.get('q').strip()
     
@@ -43,7 +46,9 @@ def search(request):
         | Q(last_name__icontains=query)
         | Q(email__icontains=query)
         | Q(phone__icontains=query)
-        | Q(first_name__icontains=query.split(' ')[0] , last_name__icontains=query.split(' ')[1])
+        | (Q(first_name__icontains=query.split(' ')[0]) & Q(last_name__icontains=query.split(' ')[1])) if textDivisible(query) else Q()
+            
+        
     ).order_by('-id')
     context = {
         'contacts': contacts,
@@ -55,3 +60,6 @@ def search(request):
         'contact/index.html',
         context
     )
+
+def split_len(text : str) -> bool:
+    return len(text.split(' ')) == 2
